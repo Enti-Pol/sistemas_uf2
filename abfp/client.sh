@@ -30,4 +30,26 @@ echo "(7) Listen"
 
 RESPONE=`nc -l -p $PORT`
 
+sleep 1
+
+echo "(10) Send Name File"
+
+echo "cliente.sh" | nc -q 1 $IP_SERVER $PORT
+
+echo "(11) Listen"
+
+RESPONSE=`nc -l -p $PORT`
+
+echo "(14) Send md5"
+
+sleep 1
+
+echo "cliente.sh" | md5sum | nc -q 1 $IP_SERVER $PORT
+
+echo "(15) Listen"
+
+RESPONSE=`nc -l -p $PORT`
+
+echo "$RESPONSE"
+
 exit 0
