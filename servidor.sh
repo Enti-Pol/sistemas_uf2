@@ -1,13 +1,7 @@
 #!/bin/bash
 
-PORT=2021
+PORT=8080
 
-echo "(0) Servidor ABFP"
+echo "Servidor"
 
-echo "(1) Listening $PORT"
-
-HEADER=`nc -l -p $PORT`
-
-echo "TEST! $HEADER"
-
-echo $HEADER | cut -d " "
+nc -l -p $PORT
