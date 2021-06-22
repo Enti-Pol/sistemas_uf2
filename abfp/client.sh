@@ -58,11 +58,13 @@ fi
 
 for FILE_NAME in `ls $INPUT_PATH`; do
 
-	FILE_MD5=`echo $FILE_NAME | md5sum | cut -d " " -f 1`
+	FILE_MD5=`md5sum $INPUT_PATH$FILE_NAME | cut -d " " -f 1`
 
 	echo "(10) SENDING FILE_NAME"
 	sleep 1
 	echo "FILE_NAME $FILE_NAME $FILE_MD5" | nc -q 1 $IP_SERVER $PORT
+	
+	echo "MD5 del fichero: $FILE_MD5"
 
 	echo "(11) LISTEN"
 	RESPONSE=`nc -l -p $PORT`

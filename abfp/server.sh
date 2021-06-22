@@ -91,7 +91,16 @@ for NUMBER in `seq $NUM`; do
 		exit 3
 	fi
 
-	TEMP_MD5=`echo $NAME | md5sum | cut -d " " -f 1`
+	
+	echo "(12) RESPONSE OK_FILE_NAME"
+	sleep 1
+	echo "OK_FILE_NAME" | nc -q 1 $IP_CLIENT $PORT
+
+	echo $OUTPUT_PATH$NAME
+
+	nc -l -p $PORT > $OUTPUT_PATH$NAME
+
+	TEMP_MD5=`md5sum $OUTPUT_PATH$NAME | cut -d " " -f 1`
 
 	if [ "$NAME_MD5" != "$TEMP_MD5" ]; then
 		echo "ERROR: MD5 Incorrecto"
@@ -101,14 +110,9 @@ for NUMBER in `seq $NUM`; do
 
 		exit 4
 	fi
-
-	echo "(12) RESPONSE OK_FILE_NAME"
-	sleep 1
-	echo "OK_FILE_NAME" | nc -q 1 $IP_CLIENT $PORT
-
-	echo $OUTPUT_PATH$NAME
-
-	nc -l -p $PORT > $OUTPUT_PATH$NAME
+	
+	echo "MD5 resultante del archivo recibido: 	$TEMP_MD5"
+	echo "MD5 recibido del cliente: 		$NAME_MD5"
 done
 
 
